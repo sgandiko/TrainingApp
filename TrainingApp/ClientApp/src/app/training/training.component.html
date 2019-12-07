@@ -1,0 +1,18 @@
+<h2>Trainings:</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let training of trainings">
+      <td>{{training.id}}</td>
+      <td>{{training.name}}</td>
+      <td>{{training.price}}</td>
+    </tr>
+  </tbody>
+</table>
+<a routerLink="/training/create">New</a>
