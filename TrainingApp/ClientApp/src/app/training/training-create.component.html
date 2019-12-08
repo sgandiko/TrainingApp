@@ -5,13 +5,30 @@
       Name: <input matInput placeholder="Name" type="text" class="form-control" type="text" [formControl]="name" name="name"
                    id="name" />
     </p>
-    <!--<p>
-      <input [matDatepicker]="myDatepicker">
-      <mat-datepicker #myDatepicker></mat-datepicker>
-    </p>-->
-    
+    <p>
+      Start Date:
+      <mat-form-field>
+        <input matInput [min]="minDate" [matDatepicker]="startDate" placeholder="Start Date"
+               [formControl]="trainingStartDate">
+        <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+        <mat-datepicker #startDate></mat-datepicker>
+      </mat-form-field>
+
+    </p>
+    <p>
+      End Date:
+      <mat-form-field>
+        <input matInput [min]="trainingStartDate" [matDatepicker]="endDate" placeholder="End Date"
+               [formControl]="trainingEndDate">
+        <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+        <mat-datepicker #endDate></mat-datepicker>
+      </mat-form-field>
+    </p>
+
     <button (click)="create()" id="trainingCreate" color="primary" type="button" class="btn" [disabled]="!name.value">
       Create
     </button>
   </div>
+
+  <div class="text-danger" *ngIf="error.isError">{{error.errorMessage}}</div>
 </form>

@@ -51,7 +51,7 @@ namespace TrainingApp.Controllers
             {
                 var training = await _trainingService.GetTrainingAsync(id);
                 if (training == null || training.TrainingNotFound)
-                    return BadRequest(string.Format(TrainingNotFound, id));
+                    return NotFound(string.Format(TrainingNotFound, id));
                 return Ok(training);
             }
             catch (Exception ex)
@@ -64,18 +64,21 @@ namespace TrainingApp.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody]CreateTrainingDto createTrainingDto)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || string.IsNullOrEmpty(createTrainingDto.Name) || createTrainingDto.TrainingEndDate < createTrainingDto.TrainingStartDate)
                 return BadRequest();
 
+            
             try
             {
+                createTrainingDto.TrainingEndDate = createTrainingDto.TrainingEndDate.ToLocalTime();
+                createTrainingDto.TrainingStartDate = createTrainingDto.TrainingStartDate.ToLocalTime();
                 await _trainingService.CreateTrainingAsync(createTrainingDto);
 
                 
-                if (!createTrainingDto.Saved)
+                if (!createTrainingDto.Created)
                     return BadRequest(string.Format(TrainingSaveFailRequestMessage, createTrainingDto.Name));
 
-                return Created(new Uri(Request.GetDisplayUrl() + "/" + createTrainingDto.Id), createTrainingDto);
+                return Ok(createTrainingDto);
             }
             catch (Exception ex)
             {
@@ -84,4 +87,6 @@ namespace TrainingApp.Controllers
 
         }
     }
+
+
 }

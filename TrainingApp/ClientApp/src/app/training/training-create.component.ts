@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Training } from './training';
-import * as moment from 'moment';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-training-create',
@@ -12,22 +12,53 @@ import * as moment from 'moment';
 })
 export class TrainingCreateComponent implements OnInit {
   public name = new FormControl('');
-  public price = new FormControl('');
-  protected url = 'http://localhost:5000/api/trainings';
-  constructor(protected httpClient: HttpClient, private router: Router) {}
+  public trainingStartDate = new FormControl();
+  public trainingEndDate = new FormControl();
+  public minDate = new Date();
+  protected url = '';
+  error: any = { isError: false, errorMessage: '' };
+    isValidDate: any;
+  constructor(protected httpClient: HttpClient, private datePipe: DatePipe,private router: Router, @Inject('BASE_URL') baseUrl: string) {
+    this.url = baseUrl + 'api/training'
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
 
   create() {
     const training: Training = {
       name: this.name.value,
-      price: this.price.value
+      trainingStartDate: this.trainingStartDate.value,
+      trainingEndDate: this.trainingEndDate.value
     };
-    this.httpClient
-      .post<Training>(`${this.url}`, training)
-      .subscribe(
-        () => this.router.navigate(['/training']),
-        error => alert('Error adding training: ' + JSON.stringify(error))
-      );
+
+    const trainingStartDateStr = this.datePipe.transform(this.trainingStartDate.value, "dd-MM-yyyy");
+    const trainingEndDateStr = this.datePipe.transform(this.trainingEndDate.value, "dd-MM-yyyy");
+
+    this.isValidDate = this.validateDates(trainingStartDateStr, trainingEndDateStr);
+    if (this.isValidDate) {
+      this.httpClient
+        .post<Training>(`${this.url}`, training)
+        .subscribe(
+          () => this.router.navigate(['/trainings']),
+          error => alert('Error adding training: ' + JSON.stringify(error))
+        );
+    }
+    
+  }
+
+  validateDates(sDate: string, eDate: string) {
+    this.isValidDate = true;
+    if ((sDate == null || eDate == null)) {
+      this.error = { isError: true, errorMessage: 'Start date and end date are required.' };
+      this.isValidDate = false;
+    }
+
+    if ((sDate != null && eDate != null) && (eDate) < (sDate)) {
+      this.error = { isError: true, errorMessage: 'End date should be grater then start date.' };
+      this.isValidDate = false;
+    }
+    return this.isValidDate;
   }
 }

@@ -16,6 +16,10 @@ namespace TrainingApp.Infrastructure.Service
         private readonly ITrainingRepository _trainingRepository;
         private readonly IMapper _mapper;
 
+        public TrainingService()
+        {
+        }
+
         #region Constructors
         public TrainingService(ITrainingRepository trainingRepository, IMapper mapper)
         {
@@ -30,13 +34,13 @@ namespace TrainingApp.Infrastructure.Service
                 var training = _mapper.Map<Training>(createTrainingDto);
                 await _trainingRepository.InsertAsync(training);
                 await _trainingRepository.SaveAsync();
-                createTrainingDto.Saved = true;
+                createTrainingDto.Created = true;
                 createTrainingDto.Id = training.Id;
                 return createTrainingDto;
             }
             catch (Exception)
             {
-                createTrainingDto.Saved = false;
+                createTrainingDto.Created = false;
                 return createTrainingDto;
             }
         }

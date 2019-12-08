@@ -1,5 +1,6 @@
 export interface Training {
   id?: number;
   name: string;
-  price: number;
+  trainingStartDate: Date;
+  trainingEndDate: Date;
 }

@@ -1,17 +1,19 @@
 <h2>Trainings:</h2>
-<table>
+<table class='table table-striped'>
   <thead>
     <tr>
       <th>Id</th>
       <th>Name</th>
-      <th>Price</th>
+      <th>Start Date</th>
+      <th>End Date</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let training of trainings">
       <td>{{training.id}}</td>
       <td>{{training.name}}</td>
-      <td>{{training.price}}</td>
+      <td>{{training.trainingStartDate | date }}</td>
+      <td>{{training.trainingEndDate | date }}</td>
     </tr>
   </tbody>
 </table>

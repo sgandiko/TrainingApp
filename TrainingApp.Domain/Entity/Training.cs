@@ -7,7 +7,7 @@ using System.Text;
 namespace TrainingApp.Domain.Entity
 {
     [Table("Trainings")]
-    public partial class Training
+    public partial class Training 
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
