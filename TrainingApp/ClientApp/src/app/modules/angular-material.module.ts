@@ -5,24 +5,20 @@ import {
   MatFormFieldModule,
   MatInputModule
 } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
     MatDatepickerModule,
-    MatFormFieldModule,
     MatNativeDateModule,
-    MatInputModule,
-    BrowserAnimationsModule
+    MatFormFieldModule,
+    MatInputModule
   ],
   exports: [
     MatDatepickerModule,
-    MatFormFieldModule,
     MatNativeDateModule,
-    MatInputModule,
-    BrowserAnimationsModule
-  ],
-  providers: [MatDatepickerModule],
+    MatFormFieldModule,
+    MatInputModule
+  ]
 })
 
-export class MaterialModule { }
+export class AngularMaterialModule { }

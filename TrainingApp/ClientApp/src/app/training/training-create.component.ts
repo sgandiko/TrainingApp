@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Training } from './training';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-training-create',

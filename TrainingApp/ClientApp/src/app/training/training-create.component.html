@@ -5,12 +5,11 @@
       Name: <input matInput placeholder="Name" type="text" class="form-control" type="text" [formControl]="name" name="name"
                    id="name" />
     </p>
+    <!--<p>
+      <input [matDatepicker]="myDatepicker">
+      <mat-datepicker #myDatepicker></mat-datepicker>
+    </p>-->
     
-    <mat-form-field>
-      <input matInput [matDatepicker]="picker" placeholder="Choose a date">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
     <button (click)="create()" id="trainingCreate" color="primary" type="button" class="btn" [disabled]="!name.value">
       Create
     </button>
