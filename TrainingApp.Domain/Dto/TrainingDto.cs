@@ -15,6 +15,7 @@ namespace TrainingApp.Domain.Dto
         public DateTime TrainingStartDate { get; set; }
         [Required]
         public DateTime TrainingEndDate { get; set; }
+        public int Days { get { return (TrainingEndDate - TrainingStartDate).Days; }  }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

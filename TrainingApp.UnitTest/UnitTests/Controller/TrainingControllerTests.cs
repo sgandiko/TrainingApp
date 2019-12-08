@@ -127,6 +127,19 @@ namespace TrainingApp.UnitTest.UnitTests.Controller
             Assert.AreEqual(1, (training.Value as TrainingDto).Id);
         }
 
+        [Test]
+        public void GetById_ExistingIdPassed_ReturnsRightDaysValue()
+        {
+
+
+            // Act
+            var result = _controller.Get(1).Result;
+            var training = result.Result as OkObjectResult;
+            // Assert
+
+            Assert.AreEqual(6, (training.Value as TrainingDto).Days);
+        }
+
 
     }
 

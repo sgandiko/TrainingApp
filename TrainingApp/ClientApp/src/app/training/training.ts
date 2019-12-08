@@ -3,4 +3,5 @@ export interface Training {
   name: string;
   trainingStartDate: Date;
   trainingEndDate: Date;
+  days: number;
 }
